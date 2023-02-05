@@ -46,7 +46,17 @@
 
 ### 프로젝트 생성 및 실행
 ```javascript
-1.worksapce에 초기 vue 프로젝트 생성
+1.github에 프로젝트를 push할 repository 생성
+
+2.vscode의 상단 명령창에 ctrl + shift + P -> gitcl 입력 -> git:clone(git:복제)
+
+3.github에 로그인하라는 메시지가 표시되면 로그인 프로세스를 완료합니다.
+
+4.연결할 github의 repository URL 선택 (1번 단계에서 만들어두었던 repository 선택)
+
+5.연동할 디렉토리 선택 (소스코드 저장하고 관리할 로컬 폴더 경로 선택)
+
+6.초기 vue 프로젝트 생성 (위에서 github와 연동한 폴더에서)
 * vscode 터미널 open
   ㄱ. vue -V  -> vue-cli 설치 유무 확인 (설치되어있다면 vue/cli 버전이 나올 것)
   ㄴ. npm install -g @vue/cli  -> vue-cli 다운로드 (vue-cli 미설치 시)
@@ -55,8 +65,8 @@
   ㅁ. npm install  -> package.json 의 라이브러리 다운로드
 
 
-2, 프로젝트 실행
-  ㄱ. vscode 우하단: Go Live 클릭 -> Live server 활성화
+7. 프로젝트 실행
+  ㄱ. vscode 우측 하단: Go Live 클릭 -> Live server 활성화
   ㄴ. 터미널에서 npm run serve 입력 -> vue 프로젝트 실행 (package.json 에서 각종 실행명령 확인 가능!)
   ㄷ. 브라우저에서 http://127.0.0.1:8080 입력 -> 프로젝트 화면 open
 ```
@@ -137,7 +147,7 @@
   import HomeView from '../views/HomeView.vue'
   import AboutView from '../views/AboutView.vue'
   import UserView from '../views/UserView.vue'
-  
+
   const routes = [
     // default page
     {path: '/', name: 'home', component: HomeView},
@@ -145,12 +155,12 @@
     {path: '/about', name: 'about', component: AboutView},
     {path: '/user', name: 'user', component: UserView},
   ]
-  
+
   const router = createRouter({
     history: createWebHashHistory(),
     routes
   })
-  
+
   export default router
 
 

@@ -20,9 +20,8 @@
 ```
 
 ### 준비
-```javascript
+
 1. node.js 다운로드 및 설치
-```
 
 <a href="https://nodejs.org/en/" target="_blank" rel="noopener">babel</a>
 ```

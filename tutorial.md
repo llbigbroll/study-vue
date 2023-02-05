@@ -1,7 +1,7 @@
 # Vue tutorial
 
 ### 소개
-```
+```javascript
 1.vue 란?
   - 웹 개발을 단순화하고 정리하기 위해 개발된 대중적인 자바스크립트 프론트엔드 프레임워크
   - 고성능의 SPA(single page application) 구축에 이용
@@ -20,11 +20,9 @@
 ```
 
 ### 준비
-
+```javascript
 1. node.js 다운로드 및 설치
-
-<a href="https://nodejs.org/en/" target="_blank" rel="noopener">babel</a>
-```
+  - https://nodejs.org/en/
   - 설치 후 cmd에서 node -v 또는 npm -v 로 버전 확인
 
 
@@ -47,7 +45,7 @@
 ```
 
 ### 프로젝트 생성 및 실행
-```
+```javascript
 1.worksapce에 초기 vue 프로젝트 생성
 * vscode 터미널 open
   ㄱ. vue -V  -> vue-cli 설치 유무 확인 (설치되어있다면 vue/cli 버전이 나올 것)
@@ -64,7 +62,7 @@
 ```
 
 ### router 적용
-```
+```javascript
 - 터미널에서 vue add router 입력 -> 설치 진행 중 Use history mode for router? N 설정
 
 
@@ -72,11 +70,11 @@
 
 * history mode?
   - vue-page 이동 시 URL을 서버로 호출 -> SPA에 적합하지 않음
-  https://happy-coding-day.tistory.com/entry/Vue-vue-router%EC%97%90%EC%84%9C-Hash-Mode-Vs-History-Mode-%EC%B0%A8%EC%9D%B4%EC%A0%90%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80
+  - https://happy-coding-day.tistory.com/entry/Vue-vue-router%EC%97%90%EC%84%9C-Hash-Mode-Vs-History-Mode-%EC%B0%A8%EC%9D%B4%EC%A0%90%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80
 ```
 
 ### axios 적용
-```
+```javascript
 - 터미널에서 npm install axios 입력 ->  package.json 에서 설치된 axios 버전 확인 가능
 
 * axios 란?
@@ -84,7 +82,7 @@
 ```
 
 ### axios 실습
-```
+```javascript
 1.App.vue 수정
   <template>
     <div>
@@ -135,25 +133,25 @@
 
 
 3./router/index.js 수정
-import { createRouter, createWebHashHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import AboutView from '../views/AboutView.vue'
-import UserView from '../views/UserView.vue'
-
-const routes = [
-  // default page
-  {path: '/', name: 'home', component: HomeView},
-  // etc page
-  {path: '/about', name: 'about', component: AboutView},
-  {path: '/user', name: 'user', component: UserView},
-]
-
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes
-})
-
-export default router
+  import { createRouter, createWebHashHistory } from 'vue-router'
+  import HomeView from '../views/HomeView.vue'
+  import AboutView from '../views/AboutView.vue'
+  import UserView from '../views/UserView.vue'
+  
+  const routes = [
+    // default page
+    {path: '/', name: 'home', component: HomeView},
+    // etc page
+    {path: '/about', name: 'about', component: AboutView},
+    {path: '/user', name: 'user', component: UserView},
+  ]
+  
+  const router = createRouter({
+    history: createWebHashHistory(),
+    routes
+  })
+  
+  export default router
 
 
 4. 프로젝트 실행/확인

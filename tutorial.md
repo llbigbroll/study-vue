@@ -20,9 +20,9 @@
 ```
 
 ### 준비
-```
+```javascript
 1. node.js 다운로드 및 설치
-  - https://nodejs.org/en/
+  - <a href="https://nodejs.org/en/" target="_blank" rel="noopener">babel</a>
   - 설치 후 cmd에서 node -v 또는 npm -v 로 버전 확인
 
 

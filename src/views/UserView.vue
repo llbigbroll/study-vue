@@ -1,5 +1,6 @@
 <template>
   <div class="user">
+    <button v-on:click="getUserList">조회</button>  <!-- v-on:click 대신 @click 가능 -->
     <h3>{{userList}}</h3>
   </div>
 </template>
@@ -13,9 +14,6 @@ export default {
     return{
       userList: []
     }
-  },
-  created() {
-    this.getUserList();
   },
   methods: {
     getUserList() {

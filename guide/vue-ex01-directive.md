@@ -2,35 +2,47 @@
 
 ### directive(지시자) 란?
 ```javascript
-- Vue 의 기능들을 사용하기 위해서 사용하는, HTML 태그 안에 들어가는 하나의 속성
+- Vue 의 기능들을 사용하기 위해서 사용하는 HTML 태그 안에 들어가는 하나의 속성
 ```
 
 ### 종류
 <img src="/guide/img/directiveType.png">
 
-### 준비
+### v-on 실습
 ```javascript
-1. node.js 다운로드 및 설치
-  - https://nodejs.org/en/
-  - 설치 후 cmd에서 node -v 또는 npm -v 로 버전 확인
+src/views/UserView.vue 에서 아래 소스 적용
+```
+```javascript
+<template>
+  <div class="user">
+    <button v-on:click="getUserList">조회</button>  <!-- v-on:click 대신 @click 가능 -->
+    <h3>{{userList}}</h3>
+  </div>
+</template>
 
+<script>
+import axios from 'axios'
 
-2.vscode 다운로드 및 설치
-  - https://code.visualstudio.com/
-
-
-3.vscode 실행 후 확장 plugin 설치
-* Plugin 명 / 제작자
-  - Auto Close Tag / Jun Han  -> tag 작성 시 자동 close 입력
-  - Auto Rename Tag / Jun Han  -> tag 이름 수정 시 open, close 동기화
-  - ESLint / Microsoft  -> javascript 문법 오류 필터(ft. 통일된 소스코드 작성 규직 정의) 
-  - htmltagwrap / Brad Gashler  -> html tag 자동완성
-  - Korean Language Pack for Visual Studio Code / Microsoft  -> VScode 한국어 Package
-  - Live Server / Ritwick Dey  -> vscode 내부 임시 서버(별도의 서버 없이 vscode 자체가 서버가 됨)
-  - open in browser / TechER  -> PC에 기본 설정된 browser VScode에서 열기
-  - Prettier - Code formatter / Prettier  -> 소스코드 기능별로 font-color 수분
-  - Vetur / Pine Wu  -> Vue Plugin (Vue 편집)
-  - Vue Language Features (Volar) / Vue  -> Vue Plugin 확장팩(Vue 편집 효율 향상-Vue 문법 수정 제안 등)
+export default {
+  name: 'UserView',
+  data() {
+    return{
+      userList: []
+    }
+  },
+  methods: {
+    getUserList() {
+      axios.get("https://jsonplaceholder.typicode.com/users/")
+        .then( (res) => {
+          this.userList = res.data;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
+}
+</script>
 ```
 
 ### 프로젝트 생성 및 실행

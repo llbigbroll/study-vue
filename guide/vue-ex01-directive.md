@@ -1,12 +1,11 @@
 # Vue Directive(지시자)
 
-### 소개
+### directive(지시자) 란?
 ```javascript
-1.directive(지시자) 란?
-  - Vue 의 기능들을 사용하기 위해서 사용하는, HTML 태그 안에 들어가는 하나의 속성
-
-2.종류?
+- Vue 의 기능들을 사용하기 위해서 사용하는, HTML 태그 안에 들어가는 하나의 속성
 ```
+
+### 종류
 <img src="/guide/img/directiveType.png">
 
 ### 준비

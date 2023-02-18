@@ -222,7 +222,10 @@ export default {
 - src/views/UserView.vue 에서 아래 소스 적용
 - v-model 속성은 v-bind(속성)와 v-on(이벤트)의 기능의 조합으로 동작 -> 예) input 태그에서는 v-bind:value 와 v-on:input 의 조합
 - 사용자가 일일이 v-bind와 v-on 속성을 다 지정해 주지 않아도 좀 더 편하게 개발할 수 있게 고안된 문법인 것 -> 양방향
-※ 영어 외 IME 입력(한국어, 일본어, 중국어)에 대해서는 한계점 존재 -> IME 입력 경우 한 글자에 대한 입력이 끝나야지만 v-model 변수값이 인풋 박스의 입력값과 동기화됩
+```
+```javascript
+※ 영어 외 IME 입력(한국어, 일본어, 중국어)에 대해서는 한계점 존재
+-> IME 입력 경우 한 글자에 대한 입력이 끝나야지만 v-model 변수값이 인풋 박스의 입력값과 동기화됩
 ```
 ```javascript
 <template>
@@ -295,7 +298,6 @@ export default {
   }
 </style>
 ```
-
 ```javascript
 ※ 뷰 공식 문서에서는 한국어 입력을 다룰 때 v-bind:value와 v-on:input를 직접 연결해서 사용하는 것을 권고
 ```

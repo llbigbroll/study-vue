@@ -78,9 +78,7 @@
 
 * router 란? vue에서 vue-page이동을 위한 주소지정
 
-* history mode?
-  - vue-page 이동 시 URL을 서버로 호출 -> SPA에 적합하지 않음
-  - https://happy-coding-day.tistory.com/entry/Vue-vue-router%EC%97%90%EC%84%9C-Hash-Mode-Vs-History-Mode-%EC%B0%A8%EC%9D%B4%EC%A0%90%EC%9D%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80
+* history mode? vue-page 이동 시 URL을 서버로 호출 -> SPA에 적합하지 않음
 ```
 
 ### axios 적용

@@ -1,21 +1,22 @@
 # Vue Directive(지시자)
 
-### directive(지시자) 란?
+### 1.directive(지시자) 란?
 ```javascript
 - Vue 의 기능들을 사용하기 위해서 사용하는 HTML 태그 안에 들어가는 하나의 속성
 ```
 
-### 종류
+### 2.종류
 <img src="/guide/img/directiveType.png">
 
-### v-on 실습
+### 3.v-on 실습
 ```javascript
 src/views/UserView.vue 에서 아래 소스 적용
 ```
 ```javascript
 <template>
   <div class="user">
-    <button v-on:click="getUserList">조회</button>  <!-- v-on:click 대신 @click 가능 -->
+    <!-- v-on:click 대신 @click 가능 -->
+    <button v-on:click="getUserList">조회</button>  
     <h3>{{userList}}</h3>
   </div>
 </template>
@@ -45,123 +46,330 @@ export default {
 </script>
 ```
 
-### 프로젝트 생성 및 실행
+### 4.v-if 실습
 ```javascript
-1.github에 프로젝트를 push할 repository 생성
-
-2.vscode의 상단 명령창에 ctrl + shift + P -> gitcl 입력 -> git:clone(git:복제)
-
-3.github에 로그인하라는 메시지가 표시되면 로그인 프로세스를 완료합니다.
-
-4.연결할 github의 repository URL 선택 (1번 단계에서 만들어두었던 repository 선택)
-
-5.연동할 디렉토리 선택 (소스코드 저장하고 관리할 로컬 폴더 경로 선택)
-
-6.초기 vue 프로젝트 생성 (위에서 github와 연동한 폴더에서)
-* vscode 터미널 open
-  ㄱ. vue -V  -> vue-cli 설치 유무 확인 (설치되어있다면 vue/cli 버전이 나올 것)
-  ㄴ. npm install -g @vue/cli  -> vue-cli 다운로드 (vue-cli 미설치 시)
-  ㄷ. vue create 프로젝트 파일명  -> vue 프로젝트 생성, package.json 생성 (예: vue create pjtName)
-  ㄹ. cd 프로젝트 파일명  -> 프로젝트 폴더로 이동 (예: cd pjtName)
-  ㅁ. npm install  -> package.json 의 라이브러리 다운로드
-
-
-7. 프로젝트 실행
-  ㄱ. vscode 우측 하단: Go Live 클릭 -> Live server 활성화
-  ㄴ. 터미널에서 npm run serve 입력 -> vue 프로젝트 실행 (package.json 에서 각종 실행명령 확인 가능!)
-  ㄷ. 브라우저에서 http://127.0.0.1:8080 입력 -> 프로젝트 화면 open
+src/views/UserView.vue 에서 아래 소스 적용
 ```
-
-### router 적용
 ```javascript
-- 터미널에서 vue add router 입력 -> 설치 진행 중 Use history mode for router? N 설정
+<template>
+  <div class="user">
+    <button @click="getUserList">조회</button>
+    <h3 v-if="isUserList">{{userList}}</h3>
+    <h3 v-else>조회 데이터가 없습니다!</h3>
+  </div>
+</template>
 
+<script>
+import axios from 'axios'
 
-* router 란? vue에서 vue-page이동을 위한 주소지정
-
-* history mode? vue-page 이동 시 URL을 서버로 호출 -> SPA에 적합하지 않음
-```
-
-### axios 적용
-```javascript
-- 터미널에서 npm install axios 입력 ->  package.json 에서 설치된 axios 버전 확인 가능
-
-* axios 란?
-  - node.js와 브라우저를 위한 Promise 기반 HTTP 비동기 통신 클라이언트 -> node_module이 필요
-```
-
-### axios 실습
-```javascript
-1.App.vue 수정
-  <template>
-    <div>
-      <nav>
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link> |
-        <router-link to="/user">User</router-link>
-      </nav>
-      <router-view/>
-    </div>
-  </template>
-  생략..
-
-
-2./views/UserView.vue 생성
-  <template>
-    <div class="user">
-      <h3>{{userList}}</h3>
-    </div>
-  </template>
-
-  <script>
-  import axios from 'axios'
-
-  export default {
-    name: 'UserView',
-    data() {
-      return{
-        userList: []
-      }
-    },
-    created() {
-      this.getUserList();
-    },
-    methods: {
-      getUserList() {
-        axios.get("https://jsonplaceholder.typicode.com/users/")
-          .then( (res) => {
-            this.userList = res.data;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+export default {
+  name: 'UserView',
+  data() {
+    return{
+      userList: [],
+      isUserList: false,
+    }
+  },
+  methods: {
+    getUserList() {
+      axios.get("https://jsonplaceholder.typicode.com/users/")
+        .then( (res) => {
+          this.userList = res.data;
+          this.isUserList = true;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
-  </script>
+}
+</script>
+```
 
+### v-for 실습
+```javascript
+src/views/UserView.vue 에서 아래 소스 적용
+```
+```javascript
+<template>
+  <div class="user">
+    <button @click="getUserList">조회</button>
+    <table v-if="isUserList">
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>phone</th>
+          <th>email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- v-for 사용 시 배열의 항목 변수를 v-bind:key 에 선언 해주어야 함 -->
+        <tr v-for="userInfo in userList" v-bind:key="userInfo">
+          <td>{{userInfo.name}}</td>
+          <td>{{userInfo.phone}}</td>
+          <td>{{userInfo.email}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3 v-else>조회 데이터가 없습니다!</h3>
+  </div>
+</template>
 
-3./router/index.js 수정
-  import { createRouter, createWebHashHistory } from 'vue-router'
-  import HomeView from '../views/HomeView.vue'
-  import AboutView from '../views/AboutView.vue'
-  import UserView from '../views/UserView.vue'
+<script>
+import axios from 'axios'
 
-  const routes = [
-    // default page
-    {path: '/', name: 'home', component: HomeView},
-    // etc page
-    {path: '/about', name: 'about', component: AboutView},
-    {path: '/user', name: 'user', component: UserView},
-  ]
+export default {
+  name: 'UserView',
+  data() {
+    return{
+      userList: [],
+      isUserList: false,
+    }
+  },
+  methods: {
+    getUserList() {
+      axios.get("https://jsonplaceholder.typicode.com/users/")
+        .then( (res) => {
+          this.userList = res.data;
+          this.isUserList = true;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
+}
+</script>
+```
 
-  const router = createRouter({
-    history: createWebHashHistory(),
-    routes
-  })
+### v-bind 실습(feat. v-show)
+```javascript
+- src/views/UserView.vue 에서 아래 소스 적용
+- class 적용을 정적으로 하려면 일반적인 css 적용 방식을 사용
+- class 적용을 동적으로 적용하기 위해서는 v-bind:class를 이용 -> 변수를 인자로 받으므로 가능
+```
+```javascript
+<template>
+  <div class="user">
+    <button @click="getUserList">조회</button>
+    <button v-show="isUserList" @click="moveTableAlign">중앙으로</button>
+    <table v-if="isUserList" v-bind:class="tableAlign">
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>phone</th>
+          <th>email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="userInfo in userList" v-bind:key="userInfo">
+            <td>{{userInfo.name}}</td>
+            <td>{{userInfo.phone}}</td>
+            <td>{{userInfo.email}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3 v-else>조회 데이터가 없습니다!</h3>
+  </div>
+</template>
 
-  export default router
+<script>
+import axios from 'axios'
 
+export default {
+  name: 'UserView',
+  data() {
+    return{
+      userList: [],
+      isUserList: false,
+      tableAlign: '',
+    }
+  },
+  methods: {
+    getUserList() {
+      axios.get("https://jsonplaceholder.typicode.com/users/")
+        .then( (res) => {
+          this.userList = res.data;
+          this.isUserList = true;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    moveTableAlign() {
+      this.tableAlign = 'position';
+    }
+  }
+}
+</script>
 
-4. 프로젝트 실행/확인
+<style scoped>
+  table {
+    border: 1px solid;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid;
+  }
+  .position {
+    margin: 10px 0px 0px 35vw;
+  }
+</style>
+```
+
+### v-model 실습
+```javascript
+- src/views/UserView.vue 에서 아래 소스 적용
+- v-model 속성은 v-bind(속성)와 v-on(이벤트)의 기능의 조합으로 동작 -> 예) input 태그에서는 v-bind:value 와 v-on:input 의 조합
+- 사용자가 일일이 v-bind와 v-on 속성을 다 지정해 주지 않아도 좀 더 편하게 개발할 수 있게 고안된 문법인 것 -> 양방향
+※ 영어 외 IME 입력(한국어, 일본어, 중국어)에 대해서는 한계점 존재 -> IME 입력 경우 한 글자에 대한 입력이 끝나야지만 v-model 변수값이 인풋 박스의 입력값과 동기화됩
+```
+```javascript
+<template>
+  <div class="user">
+    <span>{{syncText}}</span>
+    <input v-model="syncText" />
+    <button @click="getUserList">조회</button>
+    <button v-show="isUserList" @click="moveTableAlign">중앙으로</button>
+    <table v-if="isUserList" v-bind:class="tableAlign">
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>phone</th>
+          <th>email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="userInfo in userList" v-bind:key="userInfo">
+            <td>{{userInfo.name}}</td>
+            <td>{{userInfo.phone}}</td>
+            <td>{{userInfo.email}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3 v-else>조회 데이터가 없습니다!</h3>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  name: 'UserView',
+  data() {
+    return{
+      userList: [],
+      isUserList: false,
+      tableAlign: '',
+      syncText: ''
+    }
+  },
+  methods: {
+    getUserList() {
+      axios.get("https://jsonplaceholder.typicode.com/users/")
+        .then( (res) => {
+          this.userList = res.data;
+          this.isUserList = true;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    moveTableAlign() {
+      this.tableAlign = 'position';
+    }
+  }
+}
+</script>
+
+<style scoped>
+  table {
+    border: 1px solid;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid;
+  }
+  .position {
+    margin: 10px 0px 0px 35vw;
+  }
+</style>
+```
+
+```javascript
+※ 뷰 공식 문서에서는 한국어 입력을 다룰 때 v-bind:value와 v-on:input를 직접 연결해서 사용하는 것을 권고
+```
+```javascript
+<template>
+  <div class="user">
+    <span>{{valueTxt}}</span>
+    <input v-bind:value="valueTxt" @input="doinputTxt"/>
+    <button @click="getUserList">조회</button>
+    <button v-show="isUserList" @click="moveTableAlign">중앙으로</button>
+    <table v-if="isUserList" v-bind:class="tableAlign">
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>phone</th>
+          <th>email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="userInfo in userList" v-bind:key="userInfo">
+            <td>{{userInfo.name}}</td>
+            <td>{{userInfo.phone}}</td>
+            <td>{{userInfo.email}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3 v-else>조회 데이터가 없습니다!</h3>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+
+export default {
+  name: 'UserView',
+  data() {
+    return{
+      userList: [],
+      isUserList: false,
+      tableAlign: '',
+      valueTxt: ''
+    }
+  },
+  methods: {
+    getUserList() {
+      axios.get("https://jsonplaceholder.typicode.com/users/")
+        .then( (res) => {
+          this.userList = res.data;
+          this.isUserList = true;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    moveTableAlign() {
+      this.tableAlign = 'position';
+    },
+    doinputTxt(event) {
+      this.valueTxt = event.target.value;
+    }
+  }
+}
+</script>
+
+<style scoped>
+  table {
+    border: 1px solid;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid;
+  }
+  .position {
+    margin: 10px 0px 0px 35vw;
+  }
+</style>
 ```

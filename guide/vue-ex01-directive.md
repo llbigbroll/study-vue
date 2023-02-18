@@ -1,23 +1,13 @@
-# Vue tutorial
+# Vue Directive(지시자)
 
 ### 소개
 ```javascript
-1.vue 란?
-  - 웹 개발을 단순화하고 정리하기 위해 개발된 대중적인 자바스크립트 프론트엔드 프레임워크
-  - 고성능의 SPA(single page application) 구축에 이용
-    (vue에서 html은 index.html 하나 뿐 -> 실제 화면은 하나라는 의미)
+1.directive(지시자) 란?
+  - Vue 의 기능들을 사용하기 위해서 사용하는, HTML 태그 안에 들어가는 하나의 속성
 
-2.vue-cli 란?
-  vue-cli 는 기본 vue 개발 환경을 설정해주는 도구입니다. 
-  vue-cli 가 기본적인 프로젝트 세팅을 해주기 때문에 폴더 구조에 대한 고민을 줄여줌
-  (lint, build, library, webpack 설정은 어떻게 해야되는지 등)
-
-* 여기서 CLI 란?
-  명령 줄 인터페이스(CLI, Command line interface) 또는 명령어 인터페이스로
-  텍스트 터미널을 통해 사용자와 컴퓨터가 상호 작용하는 방식을 뜻한다.
-  즉, 작업 명령은 사용자가 컴퓨터 키보드 등을 통해 문자열의 형태로 입력하며
-  컴퓨터로부터의 출력 역시 문자열의 형태로 주어진다.
+2.종류?
 ```
+<img src="guide\img\directiveType.png">
 
 ### 준비
 ```javascript

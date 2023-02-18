@@ -7,7 +7,7 @@
 
 2.종류?
 ```
-<img src="guide\img\directiveType.png">
+<img src="/guide/img/directiveType.png">
 
 ### 준비
 ```javascript

@@ -16,15 +16,33 @@
 * destroyed: vue 인스턴스가 제거되는 시기
 ```
 
-### 4.v-if 실습
+### 4.created 실습
 ```javascript
 src/views/UserView.vue 에서 아래 소스 적용
 ```
 ```javascript
 <template>
   <div class="user">
+    <span>{{valueTxt}}</span>
+    <input :value="valueTxt" @input="doinputTxt" :placeholder="inputNoti"/>
     <button @click="getUserList">조회</button>
-    <h3 v-if="isUserList">{{userList}}</h3>
+    <button v-show="isUserList" @click="moveTableAlign">중앙으로</button>
+    <table v-if="isUserList" :class="tableAlign">
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>phone</th>
+          <th>email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="userInfo in userList" v-bind:key="userInfo">
+            <td>{{userInfo.name}}</td>
+            <td>{{userInfo.phone}}</td>
+            <td>{{userInfo.email}}</td>
+        </tr>
+      </tbody>
+    </table>
     <h3 v-else>조회 데이터가 없습니다!</h3>
   </div>
 </template>
@@ -38,7 +56,13 @@ export default {
     return{
       userList: [],
       isUserList: false,
+      tableAlign: '',
+      valueTxt: '',
+      inputNoti: '',
     }
+  },
+  created() {
+    this.inputNoti = 'v-model 한글 입력 TEST';
   },
   methods: {
     getUserList() {
@@ -50,13 +74,32 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    moveTableAlign() {
+      this.tableAlign = 'position';
+    },
+    doinputTxt(event) {
+      this.valueTxt = event.target.value;
     }
   }
 }
 </script>
+
+<style scoped>
+  table {
+    border: 1px solid;
+    border-collapse: collapse;
+  }
+  th, td {
+    border: 1px solid;
+  }
+  .position {
+    margin: 10px 0px 0px 35vw;
+  }
+</style>
 ```
 
-### v-for 실습
+### mounted 실습
 ```javascript
 src/views/UserView.vue 에서 아래 소스 적용
 ```
@@ -112,18 +155,23 @@ export default {
 </script>
 ```
 
-### v-bind 실습(feat. v-show)
+### updated 실습
 ```javascript
 - src/views/UserView.vue 에서 아래 소스 적용
-- class 적용을 정적으로 하려면 일반적인 css 적용 방식을 사용
-- class 적용을 동적으로 적용하기 위해서는 v-bind:class를 이용 -> 변수를 인자로 받으므로 가능
+
+※ 주의! update는 Vue element(구성요소)에 변경점이 생겼을 떄의 시점으로
+  만약 update 안에 vue element를 변경하는 소스를 구성하면 재귀 패턴으로 무한 루틴이 될 수 있음
+  -> Vue element 변화 시 다른 vue element를 제어 해야 할 경우: deforUpdate를 이용!!
 ```
 ```javascript
 <template>
   <div class="user">
+    <p>vue update count: {{updateCnt}}</p>
+    <span>{{valueTxt}}</span>
+    <input ref="inputRef" :value="valueTxt" @input="doinputTxt" :placeholder="inputNoti"/>
     <button @click="getUserList">조회</button>
     <button v-show="isUserList" @click="moveTableAlign">중앙으로</button>
-    <table v-if="isUserList" v-bind:class="tableAlign">
+    <table v-if="isUserList" :class="tableAlign">
       <thead>
         <tr>
           <th>name</th>
@@ -153,7 +201,22 @@ export default {
       userList: [],
       isUserList: false,
       tableAlign: '',
+      valueTxt: '',
+      inputNoti: '',
+      updateCnt: 0,
     }
+  },
+  created() {
+    this.inputNoti = 'v-model 한글 입력 TEST';
+  },
+  mounted() {
+    this.$refs.inputRef.focus();  // this.$refs['inputRef'].fucus(); 와 동일
+  },
+  beforeUpdate() {
+    this.updateCnt += 1;
+  },
+  updated() {
+    console.log("*** updated call ***")
   },
   methods: {
     getUserList() {
@@ -168,6 +231,9 @@ export default {
     },
     moveTableAlign() {
       this.tableAlign = 'position';
+    },
+    doinputTxt(event) {
+      this.valueTxt = event.target.value;
     }
   }
 }
@@ -187,15 +253,14 @@ export default {
 </style>
 ```
 
-### v-model 실습
+### destroyed 실습
 ```javascript
 - src/views/UserView.vue 에서 아래 소스 적용
-- v-model 속성은 v-bind(속성)와 v-on(이벤트)의 기능의 조합으로 동작 -> 예) input 태그에서는 v-bind:value 와 v-on:input 의 조합
-- 사용자가 일일이 v-bind와 v-on 속성을 다 지정해 주지 않아도 좀 더 편하게 개발할 수 있게 고안된 문법인 것 -> 양방향
-```
-```javascript
-※ 영어 외 IME 입력(한국어, 일본어, 중국어)에 대해서는 한계점 존재
--> IME 입력 경우 한 글자에 대한 입력이 끝나야지만 v-model 변수값이 인풋 박스의 입력값과 동기화됩
+- Vue3 에서 beforeDestroy -> beforeUnmount, destroyed -> umounted 로 명명이 변경
+
+※ 주의! destroyed 의 경우 Vue element(구성요소) 가 해제 된 이후의 시점으로
+   destroyed 안에 vue element를 제어하는 소스 구성 시 에러발생
+   -> 해제 전 vue element를 제어 해야 할 경우: deforDestroy를 이용!!
 ```
 ```javascript
 <template>
@@ -250,83 +315,6 @@ export default {
     },
     moveTableAlign() {
       this.tableAlign = 'position';
-    }
-  }
-}
-</script>
-
-<style scoped>
-  table {
-    border: 1px solid;
-    border-collapse: collapse;
-  }
-  th, td {
-    border: 1px solid;
-  }
-  .position {
-    margin: 10px 0px 0px 35vw;
-  }
-</style>
-```
-```javascript
-※ 뷰 공식 문서에서는 한국어 입력을 다룰 때 v-bind:value와 v-on:input를 직접 연결해서 사용하는 것을 권고
-```
-```javascript
-<template>
-  <div class="user">
-    <span>{{valueTxt}}</span>
-    <input v-bind:value="valueTxt" @input="doinputTxt"/>
-    <button @click="getUserList">조회</button>
-    <button v-show="isUserList" @click="moveTableAlign">중앙으로</button>
-    <table v-if="isUserList" v-bind:class="tableAlign">
-      <thead>
-        <tr>
-          <th>name</th>
-          <th>phone</th>
-          <th>email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="userInfo in userList" v-bind:key="userInfo">
-            <td>{{userInfo.name}}</td>
-            <td>{{userInfo.phone}}</td>
-            <td>{{userInfo.email}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <h3 v-else>조회 데이터가 없습니다!</h3>
-  </div>
-</template>
-
-<script>
-import axios from 'axios'
-
-export default {
-  name: 'UserView',
-  data() {
-    return{
-      userList: [],
-      isUserList: false,
-      tableAlign: '',
-      valueTxt: ''
-    }
-  },
-  methods: {
-    getUserList() {
-      axios.get("https://jsonplaceholder.typicode.com/users/")
-        .then( (res) => {
-          this.userList = res.data;
-          this.isUserList = true;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-    moveTableAlign() {
-      this.tableAlign = 'position';
-    },
-    doinputTxt(event) {
-      this.valueTxt = event.target.value;
     }
   }
 }

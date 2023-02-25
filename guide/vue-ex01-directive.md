@@ -11,11 +11,11 @@
 ### 3.v-on 실습
 ```javascript
 src/views/UserView.vue 에서 아래 소스 적용
+약어 사용 가능 -> v-on: 대신 @ 
 ```
 ```javascript
 <template>
   <div class="user">
-    <!-- v-on:click 대신 @click 가능 -->
     <button v-on:click="getUserList">조회</button>  
     <h3>{{userList}}</h3>
   </div>
@@ -147,6 +147,7 @@ export default {
 - src/views/UserView.vue 에서 아래 소스 적용
 - class 적용을 정적으로 하려면 일반적인 css 적용 방식을 사용
 - class 적용을 동적으로 적용하기 위해서는 v-bind:class를 이용 -> 변수를 인자로 받으므로 가능
+- 약어 사용 가능 -> v-bind: 대신 :
 ```
 ```javascript
 <template>

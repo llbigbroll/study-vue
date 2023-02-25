@@ -99,7 +99,7 @@ export default {
 </style>
 ```
 
-### mounted 실습
+### 5.mounted 실습
 ```javascript
 src/views/UserView.vue 에서 아래 소스 적용
 ```
@@ -155,7 +155,7 @@ export default {
 </script>
 ```
 
-### updated 실습
+### 6.updated 실습
 ```javascript
 - src/views/UserView.vue 에서 아래 소스 적용
 
@@ -253,7 +253,7 @@ export default {
 </style>
 ```
 
-### destroyed 실습
+### 7.destroyed 실습
 ```javascript
 - src/views/UserView.vue 에서 아래 소스 적용
 - Vue3 에서 beforeDestroy -> beforeUnmount, destroyed -> umounted 로 명명이 변경
@@ -265,11 +265,12 @@ export default {
 ```javascript
 <template>
   <div class="user">
-    <span>{{syncText}}</span>
-    <input v-model="syncText" />
+    <p>vue update count: {{updateCnt}}</p>
+    <span>{{valueTxt}}</span>
+    <input ref="inputRef" :value="valueTxt" @input="doinputTxt" :placeholder="inputNoti"/>
     <button @click="getUserList">조회</button>
     <button v-show="isUserList" @click="moveTableAlign">중앙으로</button>
-    <table v-if="isUserList" v-bind:class="tableAlign">
+    <table v-if="isUserList" :class="tableAlign">
       <thead>
         <tr>
           <th>name</th>
@@ -299,8 +300,25 @@ export default {
       userList: [],
       isUserList: false,
       tableAlign: '',
-      syncText: ''
+      valueTxt: '',
+      inputNoti: '',
+      updateCnt: 0,
     }
+  },
+  created() {
+    this.inputNoti = 'v-model 한글 입력 TEST';
+  },
+  mounted() {
+    this.$refs.inputRef.focus();  // this.$refs['inputRef'].fucus(); 와 동일
+  },
+  beforeUpdate() {
+    this.updateCnt += 1;
+  },
+  updated() {
+    console.log("*** updated call ***");
+  },
+  unmounted() {
+    console.log("*** unmount call ***");
   },
   methods: {
     getUserList() {
@@ -315,6 +333,9 @@ export default {
     },
     moveTableAlign() {
       this.tableAlign = 'position';
+    },
+    doinputTxt(event) {
+      this.valueTxt = event.target.value;
     }
   }
 }

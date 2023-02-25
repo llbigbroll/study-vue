@@ -1,49 +1,19 @@
-# Vue Directive(지시자)
+# Vue Lifecyle(생애주기)
 
-### 1.directive(지시자) 란?
+### 1.Lifecyle(생애주기) 란?
 ```javascript
-- Vue 의 기능들을 사용하기 위해서 사용하는 HTML 태그 안에 들어가는 하나의 속성
+- Vue 의 인스턴스가 생성부터 소멸되기까지 거치는 과정
 ```
 
-### 2.종류
-<img src="/guide/img/directiveType.png">
+### 2.개요
+<img src="/guide/img/lifecyle.png">
 
-### 3.v-on 실습
+### 3.요약
 ```javascript
-src/views/UserView.vue 에서 아래 소스 적용
-```
-```javascript
-<template>
-  <div class="user">
-    <!-- v-on:click 대신 @click 가능 -->
-    <button v-on:click="getUserList">조회</button>  
-    <h3>{{userList}}</h3>
-  </div>
-</template>
-
-<script>
-import axios from 'axios'
-
-export default {
-  name: 'UserView',
-  data() {
-    return{
-      userList: []
-    }
-  },
-  methods: {
-    getUserList() {
-      axios.get("https://jsonplaceholder.typicode.com/users/")
-        .then( (res) => {
-          this.userList = res.data;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }
-}
-</script>
+* created: vue 인스턴스가 생되는 시기
+* mounted: templete 이 생성된 후 vue 구성요소(elemment)들이 주입되는 시기
+* updated: vue 인스턴스가 변경된 후 가상DOM이 재 랜더링 되는 시기
+* destroyed: vue 인스턴스가 제거되는 시기
 ```
 
 ### 4.v-if 실습

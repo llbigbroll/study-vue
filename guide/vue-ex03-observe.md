@@ -2,7 +2,7 @@
 
 ### 1.Lifecyle(생애주기) 란?
 ```javascript
-- Vue 의 변수괸리: 동기/비동기 처리의 자동 제어
+- Vue 변수 동기/비동기 자동 처리
 * 동기처리: computed
 * 비동기처리: watch
 ```

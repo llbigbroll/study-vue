@@ -1,6 +1,6 @@
-# Vue Lifecyle(생애주기)
+# Vue Observe(관찰)
 
-### 1.Lifecyle(생애주기) 란?
+### 1.Observe(관찰) 란?
 ```javascript
 - Vue 변수 동기/비동기 자동 처리
 * 동기처리: computed
